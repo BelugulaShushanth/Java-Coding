@@ -9,10 +9,10 @@ public class DeSerializationMain {
         File file = new File(path);
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);
-        Employee e1 = (Employee) ois.readObject();
-        System.out.println(e1);
-//        User user1 = (User) ois.readObject();
-//        System.out.println(user1);
+//        Employee e1 = (Employee) ois.readObject();
+//        System.out.println(e1);
+        User user1 = (User) ois.readObject();
+        System.out.println(user1);
         ois.close();
         fis.close();
     }

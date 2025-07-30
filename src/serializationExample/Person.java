@@ -1,6 +1,8 @@
 package serializationExample;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private int pId;
     private String pName;
 

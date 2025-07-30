@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Employee extends Person implements Serializable {
 
-    private static final long serialVersionUID = -1234567890123456789L;
+    private static final long serialVersionUID = -1234567890123456782L;
 
     static String ORGANIZATION_NAME = "EPAM";
 
@@ -12,6 +12,7 @@ public class Employee extends Person implements Serializable {
     private String empName;
     private transient String empDept;
     private Address address;
+    private double salary;
 
     public Employee(){
         super();

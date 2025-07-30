@@ -10,9 +10,9 @@ public class SerializationMain {
         String path = "C:\\Users\\shushanth_belugula\\projects\\Java-Coding\\resources\\employee.ser";
         FileOutputStream fos = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(e);
-//        User user = new User("Shushanth", "Shushanth123");
-//        oos.writeObject(user);
+//        oos.writeObject(e);
+        User user = new User("Shushanth", "Shushanth123");
+        oos.writeObject(user);
 
         oos.close();
         fos.close();
