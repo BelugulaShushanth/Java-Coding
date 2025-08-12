@@ -1,4 +1,4 @@
-package multiThreadingV2.executors.synchronizer;
+package multiThreadingV2.synchronizer;
 
 import java.util.concurrent.Semaphore;
 
