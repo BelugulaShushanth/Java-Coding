@@ -1,5 +1,7 @@
 package multiThreadingV2.synchronizer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -10,6 +12,7 @@ public class CyclicBarrierExample {
     starting a new cycle if reused
      */
     public static void main(String[] args) {
+
         int parties = 4;
         CyclicBarrier barrier = new CyclicBarrier(parties);
         for (int i = 1; i <= parties; i++) {

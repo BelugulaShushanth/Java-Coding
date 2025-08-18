@@ -60,6 +60,9 @@ public class Main {
         List<String> startsWithAlist = stringList2.stream()
                 .collect(Collectors.filtering(s -> s.startsWith("A"), Collectors.toList()));
         System.out.println("startsWithAlist "+startsWithAlist);
+        List<String> startsWithAList2 = stringList2.stream().filter(s -> s.startsWith("A"))
+                .collect(Collectors.toList());
+        System.out.println("startsWithAList2: "+startsWithAList2);
 
 
         List<Integer> sortedList = intList.stream().sorted((x,y) -> Integer.compare(y,x)).collect(Collectors.toList());
@@ -75,6 +78,9 @@ public class Main {
         List<String> longestWord = stringList.stream().sorted((x, y) -> Integer.compare(y.length(), x.length()))
                         .limit(1).toList();
         System.out.println("longestWord: "+longestWord);
+        List<String> longestWordV2 = stringList.stream().sorted(Comparator.comparing(String::length).reversed())
+                .limit(1).collect(Collectors.toList());
+        System.out.println("longestWordV2: "+longestWordV2);
 
         Optional<String> longestWord1 = stringList.stream()
                         .max(Comparator.comparingInt(String::length));
@@ -92,7 +98,7 @@ public class Main {
         List<Integer> skipAndLimit = intList.stream().skip(2).limit(3).collect(Collectors.toList());
         System.out.println("skipAndLimit: "+skipAndLimit);
 
-        String joinedString = stringList.stream().collect(Collectors.joining(","));
+        String joinedString = stringList.stream().collect(Collectors.joining(",", "(", ")"));
         System.out.println("joinedString: "+joinedString);
 
         Optional<String> firstNonEmpty = stringList2.stream().filter(s -> !s.equals("")).findFirst();
@@ -103,7 +109,7 @@ public class Main {
         System.out.println("evenOdd: "+evenOdd);
 
         Map<String, Integer> groupByElements = stringList3.stream()
-                .collect(Collectors.groupingBy(a ->a, Collectors.summingInt(a -> 1)));
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(a -> 1)));
         System.out.println("groupByElements: "+groupByElements);
 
         // Advanced level ------------------------------------------------------------------
@@ -120,7 +126,7 @@ public class Main {
         System.out.println("secondHighest: "+secondHighest);
 
         String mostFreqWord = stringList3.stream()
-                                .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(a -> 1)))
+                                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                                 .entrySet()
                                 .stream()
                                 .max(Map.Entry.comparingByValue())
@@ -129,9 +135,9 @@ public class Main {
         System.out.println("mostFreqWord: "+mostFreqWord);
 
         List<String> sortByLenThenAlpha = stringList.stream()
-                                    .sorted(Comparator.comparingInt(String::length)
+                                            .sorted(Comparator.comparing(String::length)
                                             .thenComparing(Comparator.naturalOrder()))
-                                    .toList();
+                                            .collect(Collectors.toList());
         System.out.println("sortByLenThenAlpha: "+sortByLenThenAlpha);
 
         List<Employee> employees = List.of(new Employee("emp1", 25, "dept1"),
@@ -148,10 +154,10 @@ public class Main {
 
         Map<String, Employee> empGrpByDeptOlder = employees.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment,
-                        Collectors.collectingAndThen(
-                                Collectors.maxBy(Comparator.comparingInt(Employee::getAge)),
-                                emp -> emp.orElse(null)
-                        )));
+                               Collectors.collectingAndThen(
+                                       Collectors.maxBy(Comparator.comparingInt(Employee::getAge)),
+                                       emp -> emp.orElse(null)
+                               )));
         System.out.println("empGrpByDeptOlder: "+empGrpByDeptOlder );
 
         List<Integer> topNLargestNums = intList.stream().sorted(Comparator.reverseOrder())
@@ -165,7 +171,7 @@ public class Main {
                 .toList();
         System.out.println("palidromeList: "+palidromeList);
 
-        double avgAge = employees.stream()
+        Double avgAge = employees.stream()
                 .collect(Collectors.averagingInt(Employee::getAge));
         System.out.println("avgAge: "+avgAge);
 
@@ -177,7 +183,7 @@ public class Main {
         System.out.println("sortByDeptAgeName: "+sortByDeptAgeName);
 
         Map<Integer, Long> histogramByWordLength = stringList3.stream()
-                .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+                        .collect(Collectors.groupingBy(String::length, Collectors.counting()));
         System.out.println("histogramByWordLength: "+histogramByWordLength);
 
         List<Integer> numMoreThanOnce = intList.stream()
@@ -189,8 +195,56 @@ public class Main {
                         .collect(Collectors.toList());
         System.out.println("numMoreThanOnce: "+numMoreThanOnce);
 
+        List<Transaction> transactions = new ArrayList<>(Arrays.asList(
+                new Transaction(4000, "Jhon", 2021),
+                new Transaction(6000, "Alex", 2018),
+                new Transaction(2000, "Sam", 2023),
+                new Transaction(1000, "Bill", 2019),
+                new Transaction(8000, "Jhon", 2020),
+                new Transaction(3000, "Alex", 2019),
+                new Transaction(4000, "Jhon", 2020)
+        ));
 
-
+        Map<String, Integer> collect = transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::getName,
+                        Collectors.summingInt(Transaction::getValue)));
+        System.out.println(collect);
     }
 
+}
+
+class Transaction{
+    private int value;
+    private String name;
+    private int year;
+
+    public Transaction(int value, String name, int year) {
+        this.value = value;
+        this.name = name;
+        this.year = year;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
 }

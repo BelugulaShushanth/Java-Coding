@@ -26,7 +26,9 @@ public class Employee implements Comparable<Employee>{
     }
 
     public int compareTo(Employee e){
-        return -Integer.compare(this.empId, e.empId);
+       if(this.empId > e.empId) return 1;
+       else if(this.empId < e.empId) return -1;
+       return 0;
     }
 
     @Override

@@ -1,9 +1,6 @@
 package comparableAndComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.ToDoubleFunction;
 
 public class Main {
@@ -11,10 +8,10 @@ public class Main {
         Employee e1 = new Employee(1,"Jhon");
         Employee e2 = new Employee(2,"Alex");
         Employee e3 = new Employee(4,"Bob");
-        List<Employee> employees = new ArrayList<>();
-        employees.add(e1);
-        employees.add(e2);
-        employees.add(e3);
+        List<Employee> employees = new ArrayList<>(Arrays.asList(e1,e2,e3));
+//        employees.add(e1);
+//        employees.add(e2);
+//        employees.add(e3);
         Collections.sort(employees);
         System.out.println(employees);
 
@@ -29,7 +26,7 @@ public class Main {
         products.add(p4);
 
         ToDoubleFunction<Product> toDoubleFunction = p -> -p.getPricing();
-        Comparator<Product> priceComparator = Comparator.comparingDouble(toDoubleFunction);
+        Comparator<Product> priceComparator = Comparator.comparingDouble(Product::getPricing).reversed();
         Collections.sort(products, priceComparator);
         System.out.println(products);
     }

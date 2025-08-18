@@ -3,8 +3,7 @@ package jvmInternalAndMemoryManagement;
 public class MemoryDemo {
     // Metaspace (class metadata area)
     private static int staticCounter = 0;           // static primitive → stored in Metaspace
-    private static final String CONSTANT = "ABC";   // static final String → reference and object in Heap (string pool)
-
+    private static final String CONSTANT = "ABC";   // static final String → reference in stack and object in Heap (string pool)
     // Heap (per-instance data)
     private int instanceValue = 123;                // instance primitive → stored in instance on Heap
     private String instanceString = new String("XYZ"); // instance reference and object → stored on Heap
